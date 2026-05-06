@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio – Data Entry</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #3A8FA8;
+    --accent-light: #eef6f9;
+    --accent-border: #a8d8e8;
+    --dark: #2a2a2a;
+    --mid: #5a5a5a;
+    --soft: #8a8a8a;
+    --bg: #ffffff;
+    --bg2: #f8f8f8;
+    --border: #e8e8e8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg2); color: var(--dark); font-size: 15px; line-height: 1.6; }
+
+  [contenteditable] { cursor: text; }
+  [contenteditable]:hover { outline: 2px dashed var(--accent-border); outline-offset: 3px; border-radius: 4px; }
+  [contenteditable]:focus { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; background: var(--accent-light); }
+
+  /* TOOLBAR */
+  .toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: #1e1e1e; color: #fff;
+    padding: 0 24px; height: 52px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    font-family: 'Nunito', sans-serif; font-size: 13px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.25);
+  }
+  .toolbar-left { display: flex; align-items: center; gap: 10px; }
+  .toolbar-badge { background: var(--accent); color: #fff; padding: 3px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: .5px; white-space: nowrap; }
+  .toolbar-role { color: #ccc; font-size: 12px; white-space: nowrap; }
+  .toolbar-tip { color: #777; font-size: 12px; }
+  .toolbar-right { display: flex; gap: 8px; flex-shrink: 0; }
+  .btn-tool { background: transparent; border: 1px solid #444; color: #ddd; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 600; transition: all .15s; white-space: nowrap; }
+  .btn-tool:hover { background: #333; border-color: #666; }
+  .btn-tool.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn-tool.primary:hover { opacity: .85; }
+
+  /* PAGE */
+  .page { max-width: 820px; margin: 0 auto; padding: 72px 28px 60px; }
+
+  /* HEADER */
+  .header { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 40px 44px; margin-bottom: 16px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+  .header-role-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--accent-light); border: 1px solid var(--accent-border); color: var(--accent); padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 18px; }
+  .header-name { font-family: 'Lora', serif; font-size: 36px; font-weight: 700; color: var(--dark); line-height: 1.2; margin-bottom: 6px; min-width: 200px; }
+  .header-tagline { font-size: 15px; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+  .header-bio { font-size: 14px; color: var(--mid); line-height: 1.85; max-width: 560px; margin-bottom: 24px; }
+  .header-contacts { display: flex; flex-wrap: wrap; gap: 14px; }
+  .contact-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--mid); }
+  .contact-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .bg-icon { position: absolute; right: 36px; top: 50%; transform: translateY(-50%); font-size: 100px; opacity: .05; pointer-events: none; user-select: none; line-height: 1; }
+
+  /* SECTION */
+  .section { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 30px 40px; margin-bottom: 16px; }
+  .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .section-title { font-family: 'Lora', serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { background: var(--accent-light); border: 1px solid var(--accent-border); color: var(--accent); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; min-width: 40px; }
+  .tool-tag { background: var(--bg2); border: 1px solid var(--border); color: var(--mid); padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; min-width: 40px; }
+  .tags-hint { margin-top: 10px; font-size: 12px; color: var(--soft); font-style: italic; }
+
+  /* ABOUT */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .info-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--soft); margin-bottom: 5px; }
+  .info-value { font-size: 14px; color: var(--dark); font-weight: 600; }
+
+  /* PROJECT CARD */
+  .project-card { border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin-bottom: 14px; position: relative; transition: border-color .2s; }
+  .project-card:last-child { margin-bottom: 0; }
+  .project-card::before { content: ''; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px; border-radius: 0 3px 3px 0; background: var(--accent); }
+  .project-num { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--soft); margin-bottom: 6px; }
+  .project-brand { font-size: 11px; font-weight: 700; letter-spacing: .5px; color: var(--accent); margin-bottom: 6px; min-height: 18px; }
+  .project-title { font-family: 'Lora', serif; font-size: 17px; font-weight: 600; color: var(--dark); margin-bottom: 10px; line-height: 1.4; min-height: 24px; }
+  .project-desc { font-size: 13px; color: var(--mid); line-height: 1.85; margin-bottom: 16px; min-height: 40px; }
+
+  /* META ROWS */
+  .project-meta { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .meta-row { display: flex; align-items: center; gap: 10px; }
+  .meta-label { font-size: 12px; color: var(--soft); font-weight: 600; white-space: nowrap; min-width: 110px; }
+  .meta-value { font-size: 13px; color: var(--mid); font-weight: 500; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; min-width: 120px; }
+
+  /* LINK BOX */
+  .link-box { background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: 10px; padding: 16px 18px; }
+  .link-box-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .link-icon { font-size: 16px; }
+  .link-label { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .link-hint { font-size: 11px; color: var(--soft); margin-left: auto; }
+  .link-input-wrap { display: flex; gap: 8px; margin-bottom: 10px; }
+  .link-input {
+    flex: 1; padding: 9px 14px; border-radius: 8px;
+    border: 1.5px solid var(--accent-border); background: #fff;
+    font-family: 'Nunito', sans-serif; font-size: 13px; color: var(--dark);
+    transition: border-color .2s; outline: none;
+  }
+  .link-input:focus { border-color: var(--accent); }
+  .link-input::placeholder { color: #bbb; }
+  .link-test-btn {
+    background: var(--accent); color: #fff; border: none;
+    padding: 9px 16px; border-radius: 8px; cursor: pointer;
+    font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
+    white-space: nowrap; transition: opacity .15s;
+  }
+  .link-test-btn:hover { opacity: .85; }
+  .link-preview { margin-top: 8px; padding: 8px 12px; background: #fff; border-radius: 7px; border: 1px solid var(--accent-border); }
+  .link-preview-anchor { font-size: 12px; color: var(--accent); font-weight: 600; word-break: break-all; text-decoration: none; }
+  .link-preview-anchor:hover { text-decoration: underline; }
+  .link-types { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .link-type-pill {
+    background: #fff; border: 1px solid var(--accent-border); color: var(--accent);
+    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    cursor: pointer; transition: all .15s; user-select: none;
+  }
+  .link-type-pill:hover { background: var(--accent); color: #fff; }
+
+  /* EDUCATION */
+  .edu-card { border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
+  .edu-card:last-child { margin-bottom: 0; }
+  .edu-label { font-size: 11px; font-weight: 700; letter-spacing: .5px; color: var(--accent); margin-bottom: 5px; }
+  .edu-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .edu-desc { font-size: 13px; color: var(--mid); line-height: 1.7; }
+
+  /* NOTE */
+  .projects-note { background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 12px; color: var(--accent); line-height: 1.7; }
+
+  /* FOOTER */
+  .footer { text-align: center; padding: 20px; font-size: 12px; color: var(--soft); }
+  .footer span { color: var(--accent); font-weight: 700; }
+
+  /* PRINT */
+  @media print {
+    .toolbar { display: none !important; }
+    body { background: #fff; }
+    .page { padding: 20px 32px; max-width: 100%; }
+    .header, .section { border: 1px solid #ddd; break-inside: avoid; }
+    .project-card { break-inside: avoid; }
+    [contenteditable] { outline: none !important; background: transparent !important; }
+    .projects-note, .tags-hint, .link-types, .link-test-btn, .link-hint { display: none !important; }
+    .link-box { background: #f9f9f9; border-color: #ddd; }
+    .link-input { border-color: #ddd; }
+    .link-input-wrap { margin-bottom: 4px; }
+  }
+
+  @media (max-width: 620px) {
+    .page { padding: 66px 14px 40px; }
+    .header, .section { padding: 22px 18px; }
+    .header-name { font-size: 26px; }
+    .two-col { grid-template-columns: 1fr; }
+    .bg-icon { display: none; }
+    .toolbar-tip, .toolbar-role { display: none; }
+    .meta-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .link-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <span class="toolbar-badge">30DPC Batch 2</span>
+    <span class="toolbar-role">📊 Data Entry</span>
+    <span class="toolbar-tip">✏️ Klik teks untuk mengedit · Isi link di setiap task</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn-tool" onclick="window.print()">🖨️ Download PDF</button>
+    <button class="btn-tool primary" onclick="saveHTML()">💾 Save HTML</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="header">
+    <div class="bg-icon">📊</div>
+    <div class="header-role-badge">📊 Data Entry</div>
+    <div class="header-name" contenteditable="true" spellcheck="false">Nama Lengkap Kamu</div>
+    <div class="header-tagline" contenteditable="true" spellcheck="false">Data Entry · Freelancer</div>
+    <div class="header-bio" contenteditable="true" spellcheck="false">Tulis bio singkat di sini. Ceritakan siapa kamu, bidang yang kamu tekuni, dan nilai yang kamu tawarkan sebagai Data Entry. 2–3 kalimat sudah cukup — ringkas, jelas, dan berkesan.</div>
+    <div class="header-contacts">
+      <div class="contact-item"><div class="contact-dot"></div><span contenteditable="true" spellcheck="false">email@kamu.com</span></div>
+      <div class="contact-item"><div class="contact-dot"></div><span contenteditable="true" spellcheck="false">linkedin.com/in/namakamu</span></div>
+      <div class="contact-item"><div class="contact-dot"></div><span contenteditable="true" spellcheck="false">Kota, Indonesia</span></div>
+      <div class="contact-item"><div class="contact-dot"></div><span contenteditable="true" spellcheck="false">+62 8xx-xxxx-xxxx</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title">Tentang Saya</div><div class="section-line"></div></div>
+    <div class="two-col">
+      <div><div class="info-label">Ketersediaan</div><div class="info-value" contenteditable="true" spellcheck="false">Full-time / Part-time Freelance</div></div>
+      <div><div class="info-label">Pengalaman</div><div class="info-value" contenteditable="true" spellcheck="false">Fresh Graduate / Pemula</div></div>
+      <div><div class="info-label">Bahasa</div><div class="info-value" contenteditable="true" spellcheck="false">Indonesia, English (Passive)</div></div>
+      <div><div class="info-label">Platform Aktif</div><div class="info-value" contenteditable="true" spellcheck="false">Upwork, Projects.co.id, FastWork</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title">Skills</div><div class="section-line"></div></div>
+    <div class="tags">
+      <div class="skill-tag" contenteditable="true" spellcheck="false">Data Cleaning & Validation</div>
+      <div class="skill-tag" contenteditable="true" spellcheck="false">Google Sheets Formula</div>
+      <div class="skill-tag" contenteditable="true" spellcheck="false">Database Building</div>
+      <div class="skill-tag" contenteditable="true" spellcheck="false">Data Visualization (Chart)</div>
+      <div class="skill-tag" contenteditable="true" spellcheck="false">Google Forms</div>
+      <div class="skill-tag" contenteditable="true" spellcheck="false">Spreadsheet Management</div>
+      <div class="skill-tag" contenteditable="true" spellcheck="false">Pivot Table</div>
+      <div class="skill-tag" contenteditable="true" spellcheck="false">File Naming Convention</div>
+    </div>
+    <div class="tags-hint">💡 Klik untuk mengedit. Tambah atau hapus sesuai kemampuan kamu yang sebenarnya.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title">Tools yang Dikuasai</div><div class="section-line"></div></div>
+    <div class="tags">
+      <div class="tool-tag" contenteditable="true" spellcheck="false">Google Sheets</div>
+      <div class="tool-tag" contenteditable="true" spellcheck="false">Microsoft Excel</div>
+      <div class="tool-tag" contenteditable="true" spellcheck="false">Google Forms</div>
+      <div class="tool-tag" contenteditable="true" spellcheck="false">Google Drive</div>
+    </div>
+    <div class="tags-hint">💡 Sesuaikan dengan tools yang benar-benar kamu pakai saat mengerjakan task.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title">Portofolio Proyek</div><div class="section-line"></div></div>
+    <div class="projects-note">
+      📋 <strong>Cara isi:</strong> Tulis task yang kamu kerjakan — boleh dari kategori role mana saja. Tempel link hasil kerja di kotak biru setiap task. Kosongkan slot yang tidak terpakai.
+    </div>
+    
+    <div class="project-card" id="card-1">
+      <div class="project-num">Task 1</div>
+      <div class="project-brand" contenteditable="true" spellcheck="false">📌 Nama Brand (Glow &amp; Co. / Ruang Tumbuh / Seruni Studio / Dapur Nusantara)</div>
+      <div class="project-title" contenteditable="true" spellcheck="false">Judul Task yang Dikerjakan</div>
+      <div class="project-desc" contenteditable="true" spellcheck="false">Deskripsikan apa yang kamu kerjakan, pendekatan yang digunakan, dan apa hasilnya. Tulis 2–3 kalimat yang jelas dan spesifik.</div>
+      <div class="project-meta">
+        <div class="meta-row">
+          <span class="meta-label">📄 Format Output</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Google Sheets / PDF / Canva</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">🏷️ Kategori</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Data Entry / Social Media / Admin VA</span>
+        </div>
+      </div>
+      <div class="link-box">
+        <div class="link-box-header">
+          <span class="link-icon">🔗</span>
+          <span class="link-label">Link Hasil Kerja</span>
+          <span class="link-hint">Tempel link Google Drive, Canva, Notion, atau Sheets di bawah ini</span>
+        </div>
+        <div class="link-input-wrap">
+          <input type="url" class="link-input" placeholder="https://drive.google.com/... atau https://canva.com/..." 
+            oninput="updateLink(this, 1)" />
+          <button class="link-test-btn" onclick="testLink(1)" title="Buka link di tab baru">↗ Buka</button>
+        </div>
+        <div class="link-preview" id="preview-1" style="display:none">
+          <a class="link-preview-anchor" id="anchor-1" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="link-types">
+          <span class="link-type-pill" onclick="setPlaceholder(1, 'https://drive.google.com/')">Google Drive</span>
+          <span class="link-type-pill" onclick="setPlaceholder(1, 'https://www.canva.com/design/')">Canva</span>
+          <span class="link-type-pill" onclick="setPlaceholder(1, 'https://notion.so/')">Notion</span>
+          <span class="link-type-pill" onclick="setPlaceholder(1, 'https://docs.google.com/spreadsheets/')">Google Sheets</span>
+          <span class="link-type-pill" onclick="setPlaceholder(1, 'https://docs.google.com/')">Google Docs</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" id="card-2">
+      <div class="project-num">Task 2</div>
+      <div class="project-brand" contenteditable="true" spellcheck="false">📌 Nama Brand (Glow &amp; Co. / Ruang Tumbuh / Seruni Studio / Dapur Nusantara)</div>
+      <div class="project-title" contenteditable="true" spellcheck="false">Judul Task yang Dikerjakan</div>
+      <div class="project-desc" contenteditable="true" spellcheck="false">Deskripsikan apa yang kamu kerjakan, pendekatan yang digunakan, dan apa hasilnya. Tulis 2–3 kalimat yang jelas dan spesifik.</div>
+      <div class="project-meta">
+        <div class="meta-row">
+          <span class="meta-label">📄 Format Output</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Google Sheets / PDF / Canva</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">🏷️ Kategori</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Data Entry / Social Media / Admin VA</span>
+        </div>
+      </div>
+      <div class="link-box">
+        <div class="link-box-header">
+          <span class="link-icon">🔗</span>
+          <span class="link-label">Link Hasil Kerja</span>
+          <span class="link-hint">Tempel link Google Drive, Canva, Notion, atau Sheets di bawah ini</span>
+        </div>
+        <div class="link-input-wrap">
+          <input type="url" class="link-input" placeholder="https://drive.google.com/... atau https://canva.com/..." 
+            oninput="updateLink(this, 2)" />
+          <button class="link-test-btn" onclick="testLink(2)" title="Buka link di tab baru">↗ Buka</button>
+        </div>
+        <div class="link-preview" id="preview-2" style="display:none">
+          <a class="link-preview-anchor" id="anchor-2" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="link-types">
+          <span class="link-type-pill" onclick="setPlaceholder(2, 'https://drive.google.com/')">Google Drive</span>
+          <span class="link-type-pill" onclick="setPlaceholder(2, 'https://www.canva.com/design/')">Canva</span>
+          <span class="link-type-pill" onclick="setPlaceholder(2, 'https://notion.so/')">Notion</span>
+          <span class="link-type-pill" onclick="setPlaceholder(2, 'https://docs.google.com/spreadsheets/')">Google Sheets</span>
+          <span class="link-type-pill" onclick="setPlaceholder(2, 'https://docs.google.com/')">Google Docs</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" id="card-3">
+      <div class="project-num">Task 3</div>
+      <div class="project-brand" contenteditable="true" spellcheck="false">📌 Nama Brand (Glow &amp; Co. / Ruang Tumbuh / Seruni Studio / Dapur Nusantara)</div>
+      <div class="project-title" contenteditable="true" spellcheck="false">Judul Task yang Dikerjakan</div>
+      <div class="project-desc" contenteditable="true" spellcheck="false">Deskripsikan apa yang kamu kerjakan, pendekatan yang digunakan, dan apa hasilnya. Tulis 2–3 kalimat yang jelas dan spesifik.</div>
+      <div class="project-meta">
+        <div class="meta-row">
+          <span class="meta-label">📄 Format Output</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Google Sheets / PDF / Canva</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">🏷️ Kategori</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Data Entry / Social Media / Admin VA</span>
+        </div>
+      </div>
+      <div class="link-box">
+        <div class="link-box-header">
+          <span class="link-icon">🔗</span>
+          <span class="link-label">Link Hasil Kerja</span>
+          <span class="link-hint">Tempel link Google Drive, Canva, Notion, atau Sheets di bawah ini</span>
+        </div>
+        <div class="link-input-wrap">
+          <input type="url" class="link-input" placeholder="https://drive.google.com/... atau https://canva.com/..." 
+            oninput="updateLink(this, 3)" />
+          <button class="link-test-btn" onclick="testLink(3)" title="Buka link di tab baru">↗ Buka</button>
+        </div>
+        <div class="link-preview" id="preview-3" style="display:none">
+          <a class="link-preview-anchor" id="anchor-3" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="link-types">
+          <span class="link-type-pill" onclick="setPlaceholder(3, 'https://drive.google.com/')">Google Drive</span>
+          <span class="link-type-pill" onclick="setPlaceholder(3, 'https://www.canva.com/design/')">Canva</span>
+          <span class="link-type-pill" onclick="setPlaceholder(3, 'https://notion.so/')">Notion</span>
+          <span class="link-type-pill" onclick="setPlaceholder(3, 'https://docs.google.com/spreadsheets/')">Google Sheets</span>
+          <span class="link-type-pill" onclick="setPlaceholder(3, 'https://docs.google.com/')">Google Docs</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" id="card-4">
+      <div class="project-num">Task 4</div>
+      <div class="project-brand" contenteditable="true" spellcheck="false">📌 Nama Brand (Glow &amp; Co. / Ruang Tumbuh / Seruni Studio / Dapur Nusantara)</div>
+      <div class="project-title" contenteditable="true" spellcheck="false">Judul Task yang Dikerjakan</div>
+      <div class="project-desc" contenteditable="true" spellcheck="false">Deskripsikan apa yang kamu kerjakan, pendekatan yang digunakan, dan apa hasilnya. Tulis 2–3 kalimat yang jelas dan spesifik.</div>
+      <div class="project-meta">
+        <div class="meta-row">
+          <span class="meta-label">📄 Format Output</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Google Sheets / PDF / Canva</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">🏷️ Kategori</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Data Entry / Social Media / Admin VA</span>
+        </div>
+      </div>
+      <div class="link-box">
+        <div class="link-box-header">
+          <span class="link-icon">🔗</span>
+          <span class="link-label">Link Hasil Kerja</span>
+          <span class="link-hint">Tempel link Google Drive, Canva, Notion, atau Sheets di bawah ini</span>
+        </div>
+        <div class="link-input-wrap">
+          <input type="url" class="link-input" placeholder="https://drive.google.com/... atau https://canva.com/..." 
+            oninput="updateLink(this, 4)" />
+          <button class="link-test-btn" onclick="testLink(4)" title="Buka link di tab baru">↗ Buka</button>
+        </div>
+        <div class="link-preview" id="preview-4" style="display:none">
+          <a class="link-preview-anchor" id="anchor-4" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="link-types">
+          <span class="link-type-pill" onclick="setPlaceholder(4, 'https://drive.google.com/')">Google Drive</span>
+          <span class="link-type-pill" onclick="setPlaceholder(4, 'https://www.canva.com/design/')">Canva</span>
+          <span class="link-type-pill" onclick="setPlaceholder(4, 'https://notion.so/')">Notion</span>
+          <span class="link-type-pill" onclick="setPlaceholder(4, 'https://docs.google.com/spreadsheets/')">Google Sheets</span>
+          <span class="link-type-pill" onclick="setPlaceholder(4, 'https://docs.google.com/')">Google Docs</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card" id="card-5">
+      <div class="project-num">Task 5</div>
+      <div class="project-brand" contenteditable="true" spellcheck="false">📌 Nama Brand (Glow &amp; Co. / Ruang Tumbuh / Seruni Studio / Dapur Nusantara)</div>
+      <div class="project-title" contenteditable="true" spellcheck="false">Judul Task yang Dikerjakan</div>
+      <div class="project-desc" contenteditable="true" spellcheck="false">Deskripsikan apa yang kamu kerjakan, pendekatan yang digunakan, dan apa hasilnya. Tulis 2–3 kalimat yang jelas dan spesifik.</div>
+      <div class="project-meta">
+        <div class="meta-row">
+          <span class="meta-label">📄 Format Output</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Google Sheets / PDF / Canva</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">🏷️ Kategori</span>
+          <span class="meta-value" contenteditable="true" spellcheck="false">contoh: Data Entry / Social Media / Admin VA</span>
+        </div>
+      </div>
+      <div class="link-box">
+        <div class="link-box-header">
+          <span class="link-icon">🔗</span>
+          <span class="link-label">Link Hasil Kerja</span>
+          <span class="link-hint">Tempel link Google Drive, Canva, Notion, atau Sheets di bawah ini</span>
+        </div>
+        <div class="link-input-wrap">
+          <input type="url" class="link-input" placeholder="https://drive.google.com/... atau https://canva.com/..." 
+            oninput="updateLink(this, 5)" />
+          <button class="link-test-btn" onclick="testLink(5)" title="Buka link di tab baru">↗ Buka</button>
+        </div>
+        <div class="link-preview" id="preview-5" style="display:none">
+          <a class="link-preview-anchor" id="anchor-5" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="link-types">
+          <span class="link-type-pill" onclick="setPlaceholder(5, 'https://drive.google.com/')">Google Drive</span>
+          <span class="link-type-pill" onclick="setPlaceholder(5, 'https://www.canva.com/design/')">Canva</span>
+          <span class="link-type-pill" onclick="setPlaceholder(5, 'https://notion.so/')">Notion</span>
+          <span class="link-type-pill" onclick="setPlaceholder(5, 'https://docs.google.com/spreadsheets/')">Google Sheets</span>
+          <span class="link-type-pill" onclick="setPlaceholder(5, 'https://docs.google.com/')">Google Docs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title">Pendidikan &amp; Pelatihan</div><div class="section-line"></div></div>
+    <div class="edu-card">
+      <div class="edu-label">🎓 Pelatihan · 2026</div>
+      <div class="edu-title" contenteditable="true" spellcheck="false">30 Day Portfolio Challenge Batch 2 — indriariadna.com</div>
+      <div class="edu-desc" contenteditable="true" spellcheck="false">Bootcamp intensif 30 hari membangun portofolio aktif sebagai Data Entry. Mengerjakan task berbasis brief brand dummy (Glow &amp; Co., Ruang Tumbuh, Seruni Studio, Dapur Nusantara) dengan output nyata yang bisa ditampilkan ke klien.</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-label" contenteditable="true" spellcheck="false">🏫 Pendidikan Formal · Tahun Lulus</div>
+      <div class="edu-title" contenteditable="true" spellcheck="false">Nama Kampus / Sekolah</div>
+      <div class="edu-desc" contenteditable="true" spellcheck="false">Jurusan / Program Studi. Tambahkan pencapaian atau kegiatan relevan jika ada.</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-label" contenteditable="true" spellcheck="false">📜 Sertifikasi / Kursus Lain (opsional)</div>
+      <div class="edu-title" contenteditable="true" spellcheck="false">Nama Kursus atau Sertifikasi</div>
+      <div class="edu-desc" contenteditable="true" spellcheck="false">Platform / Penyelenggara · Tahun</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Dibuat sebagai bagian dari <span>30 Day Portfolio Challenge Batch 2</span> · indriariadna.com
+  </div>
+
+</div>
+
+<script>
+function updateLink(input, num) {
+  var val = input.value.trim();
+  var preview = document.getElementById('preview-' + num);
+  var anchor = document.getElementById('anchor-' + num);
+  if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+    anchor.href = val;
+    anchor.textContent = '🔗 ' + val;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+function testLink(num) {
+  var input = document.querySelector('#card-' + num + ' .link-input');
+  var val = input.value.trim();
+  if (!val) { alert('Belum ada link yang dimasukkan.'); return; }
+  if (!val.startsWith('http')) { alert('Link harus dimulai dengan https://'); return; }
+  window.open(val, '_blank');
+}
+
+function setPlaceholder(num, prefix) {
+  var input = document.querySelector('#card-' + num + ' .link-input');
+  if (!input.value) {
+    input.value = prefix;
+    input.focus();
+  }
+}
+
+function saveHTML() {
+  document.querySelectorAll('.projects-note, .tags-hint, .link-types, .link-hint').forEach(function(el) { el.style.display = 'none'; });
+  var name = document.querySelector('.header-name').innerText.trim() || 'portfolio';
+  var slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || 'freelancer';
+  var role = 'data-entry';
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'portfolio-' + slug + '-' + role + '.html';
+  a.click();
+  setTimeout(function() {
+    document.querySelectorAll('.projects-note, .tags-hint, .link-types, .link-hint').forEach(function(el) { el.style.display = ''; });
+  }, 500);
+}
+</script>
+</body>
+</html>
