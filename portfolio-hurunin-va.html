@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hurun'in Zakkiyah — Virtual Assistant Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7EFE5;
+    --cream-dark: #EDE0CC;
+    --brown: #3A2010;
+    --brown-mid: #7C4A2D;
+    --terracotta: #C4622D;
+    --sage: #7A9170;
+    --sage-light: #C9DBBA;
+    --sand: #D9C4A5;
+    --white: #FDFAF6;
+    --text: #2C1A0E;
+    --text-muted: #7A5E4A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247, 239, 229, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--brown); letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--text-muted); text-decoration: none;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terracotta); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--brown);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 4rem 6rem 5%;
+    position: relative; overflow: hidden;
+  }
+  .hero-left::before {
+    content: '';
+    position: absolute; top: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: var(--terracotta);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .hero-tag {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--sage-light);
+    background: rgba(122,145,112,0.15);
+    border: 1px solid rgba(201,219,186,0.3);
+    padding: 6px 16px; border-radius: 100px;
+    margin-bottom: 1.8rem; display: inline-block;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--white); margin-bottom: 1rem;
+  }
+  .hero-name em {
+    font-style: italic; color: var(--sand);
+    display: block;
+  }
+  .hero-role {
+    font-size: 0.9rem; font-weight: 400;
+    color: var(--sand); opacity: 0.85;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-desc {
+    font-size: 0.92rem; color: rgba(253,250,246,0.7);
+    max-width: 380px; line-height: 1.8;
+    margin-bottom: 2.8rem;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--terracotta); color: white;
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 28px; border-radius: 4px;
+    transition: all 0.25s;
+  }
+  .hero-cta:hover { background: #a8501f; transform: translateY(-2px); }
+
+  .hero-right {
+    background: var(--cream-dark);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 5% 6rem 3.5rem;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; width: 100%; margin-bottom: 3rem;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--sand);
+  }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700;
+    color: var(--brown); line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .skill-chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 2.5rem;
+  }
+  .chip {
+    font-size: 0.78rem; font-weight: 500;
+    padding: 5px 14px; border-radius: 100px;
+    border: 1.5px solid var(--brown-mid);
+    color: var(--brown-mid);
+    background: transparent;
+  }
+  .chip.filled {
+    background: var(--brown-mid); color: white;
+    border-color: var(--brown-mid);
+  }
+  .chip.green {
+    background: var(--sage-light); color: var(--sage);
+    border-color: var(--sage);
+  }
+  .hero-note {
+    font-size: 0.8rem; color: var(--text-muted);
+    font-style: italic;
+    border-left: 3px solid var(--terracotta);
+    padding-left: 12px;
+    line-height: 1.6;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; }
+
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--terracotta); font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 700; color: var(--brown);
+    margin-bottom: 1rem; line-height: 1.2;
+  }
+  .section-sub {
+    font-size: 0.95rem; color: var(--text-muted);
+    max-width: 560px; line-height: 1.8;
+  }
+
+  /* PROJECT SECTIONS */
+  .project-section {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid var(--sand);
+    box-shadow: 0 2px 20px rgba(58,32,16,0.05);
+  }
+  .project-header {
+    padding: 2.5rem 3rem;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 2rem;
+    cursor: pointer;
+    background: var(--white);
+    transition: background 0.2s;
+  }
+  .project-header:hover { background: var(--cream); }
+  .project-header-left { flex: 1; }
+  .project-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 0.8rem;
+  }
+  .badge-orange { background: #FDEEE3; color: var(--terracotta); }
+  .badge-green { background: #E8F0E3; color: var(--sage); }
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 600;
+    color: var(--brown); margin-bottom: 0.4rem;
+  }
+  .project-meta {
+    font-size: 0.82rem; color: var(--text-muted);
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    align-items: center;
+  }
+  .project-meta span { display: flex; align-items: center; gap: 5px; }
+  .project-header-right {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+    flex-shrink: 0;
+  }
+  .grade-badge {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+  }
+  .grade-a { background: var(--sage-light); color: var(--sage); }
+  .grade-b { background: #FDE9D6; color: var(--terracotta); }
+  .toggle-icon {
+    font-size: 1.2rem; color: var(--text-muted);
+    transition: transform 0.3s;
+  }
+  .project-section.open .toggle-icon { transform: rotate(180deg); }
+
+  .project-body {
+    border-top: 1px solid var(--cream-dark);
+    display: none;
+    padding: 2.5rem 3rem;
+  }
+  .project-section.open .project-body { display: block; }
+
+  /* TASK CARDS */
+  .tasks-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem; margin-bottom: 2rem;
+  }
+  .task-card {
+    background: var(--cream);
+    border-radius: 12px; padding: 1.5rem;
+    border: 1px solid var(--sand);
+    position: relative; overflow: hidden;
+  }
+  .task-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .task-card.grade-a-card::before { background: var(--sage); }
+  .task-card.grade-b-card::before { background: var(--terracotta); }
+  .task-number {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .task-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--brown); margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .task-score-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.8rem;
+  }
+  .score-bar-wrap {
+    flex: 1; background: var(--cream-dark);
+    border-radius: 100px; height: 5px;
+    margin-right: 10px; overflow: hidden;
+  }
+  .score-bar {
+    height: 100%; border-radius: 100px;
+    background: var(--sage);
+    transition: width 0.8s ease;
+  }
+  .score-bar.orange { background: var(--terracotta); }
+  .score-text {
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--brown); white-space: nowrap;
+  }
+  .task-criteria {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .criteria-item {
+    background: var(--white);
+    border-radius: 6px; padding: 6px 10px;
+  }
+  .criteria-label {
+    font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-muted);
+    font-weight: 600;
+  }
+  .criteria-value {
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--brown);
+  }
+
+  /* Q&A STYLE for Milk & Honey */
+  .qa-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .qa-card {
+    background: var(--cream);
+    border-radius: 12px; padding: 1.5rem;
+    border: 1px solid var(--sand);
+  }
+  .qa-number {
+    display: inline-block;
+    width: 28px; height: 28px;
+    background: var(--brown); color: var(--cream);
+    border-radius: 50%;
+    font-size: 0.78rem; font-weight: 600;
+    text-align: center; line-height: 28px;
+    margin-bottom: 0.8rem;
+  }
+  .qa-q {
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--brown); margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+  .qa-desc {
+    font-size: 0.8rem; color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .qa-skills {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    margin-top: 0.8rem;
+  }
+  .qa-skill {
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    background: var(--brown); color: var(--cream);
+    padding: 3px 10px; border-radius: 100px;
+  }
+
+  /* FEEDBACK HIGHLIGHT */
+  .feedback-box {
+    background: linear-gradient(135deg, var(--brown) 0%, #5A3020 100%);
+    border-radius: 16px; padding: 2.5rem 3rem;
+    color: var(--cream); margin-bottom: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .feedback-box::before {
+    content: '❝';
+    position: absolute; top: -10px; right: 30px;
+    font-size: 8rem; color: rgba(255,255,255,0.06);
+    font-family: serif; line-height: 1;
+  }
+  .feedback-box p {
+    font-size: 0.92rem; line-height: 1.9;
+    opacity: 0.88; position: relative;
+  }
+  .feedback-source {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--sand); margin-top: 1.2rem;
+    opacity: 0.7; position: relative;
+  }
+
+  /* ABOUT */
+  .about-section {
+    background: var(--brown);
+    padding: 6rem 5%;
+  }
+  .about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: center;
+  }
+  .about-left .section-label { color: var(--sand); }
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--white); line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .about-title em { font-style: italic; color: var(--sand); }
+  .about-desc {
+    font-size: 0.92rem; color: rgba(253,250,246,0.7);
+    line-height: 1.9;
+  }
+  .skills-list {
+    list-style: none;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .skills-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.85rem; color: rgba(253,250,246,0.8);
+    line-height: 1.4;
+  }
+  .skills-list li::before {
+    content: '✦';
+    color: var(--terracotta); flex-shrink: 0;
+    margin-top: 2px; font-size: 0.7rem;
+  }
+  .skills-section-label {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sand); font-weight: 600; opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+
+  /* PROJECTS MAIN */
+  .projects-section {
+    max-width: 1100px; margin: 0 auto;
+  }
+  .projects-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--cream-dark);
+    text-align: center;
+    padding: 6rem 5%;
+  }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-links {
+    display: flex; gap: 1rem; justify-content: center;
+    flex-wrap: wrap; margin-top: 2.5rem;
+  }
+  .contact-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 6px;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+  .btn-dark {
+    background: var(--brown); color: var(--cream);
+  }
+  .btn-dark:hover { background: var(--brown-mid); }
+  .btn-outline {
+    background: transparent;
+    border-color: var(--brown-mid);
+    color: var(--brown);
+  }
+  .btn-outline:hover { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+
+  /* FOOTER */
+  footer {
+    background: var(--brown); color: rgba(253,250,246,0.4);
+    text-align: center; padding: 2rem;
+    font-size: 0.78rem;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 48px; height: 3px;
+    background: var(--terracotta);
+    margin: 1.5rem 0;
+  }
+
+  /* HIGHLIGHT CALLOUT */
+  .callout {
+    background: #FFF6EE;
+    border: 1.5px solid #F3D5B5;
+    border-radius: 10px; padding: 1rem 1.5rem;
+    font-size: 0.85rem; color: var(--brown-mid);
+    margin-bottom: 2rem;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* OVERALL SCORE */
+  .score-summary {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1rem; margin-bottom: 2rem;
+  }
+  .score-box {
+    text-align: center;
+    background: var(--cream); border-radius: 10px;
+    padding: 1.2rem; border: 1px solid var(--sand);
+  }
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--brown); line-height: 1;
+  }
+  .score-of { font-size: 0.75rem; color: var(--text-muted); }
+  .score-cat {
+    font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-muted);
+    font-weight: 600; margin-top: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left, .hero-right { padding: 5rem 6% 4rem; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .qa-grid { grid-template-columns: 1fr; }
+    .project-header { padding: 1.8rem 1.5rem; }
+    .project-body { padding: 1.5rem; }
+    .tasks-grid { grid-template-columns: 1fr; }
+    .score-summary { grid-template-columns: repeat(2, 1fr); }
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Hurun'in Zakkiyah</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">✦ Virtual Assistant Portfolio</span>
+    <h1 class="hero-name">
+      Hurun'in
+      <em>Zakkiyah</em>
+    </h1>
+    <p class="hero-role">Admin & Research VA  ·  Data Entry VA</p>
+    <p class="hero-desc">
+      Detail-oriented and adaptable, with hands-on experience in research, 
+      data entry, scheduling, and client communication — built through real 
+      task-based portfolio challenges.
+    </p>
+    <a href="#projects" class="hero-cta">View My Work ↓</a>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">7+</div>
+        <div class="stat-label">VA Tasks Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">A</div>
+        <div class="stat-label">Avg. Grade (30DPC)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Programs Joined</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Tasks Approved</div>
+      </div>
+    </div>
+
+    <div class="skill-chips">
+      <span class="chip filled">Research</span>
+      <span class="chip filled">Data Entry</span>
+      <span class="chip green">Calendar Mgmt</span>
+      <span class="chip green">Email Writing</span>
+      <span class="chip">Google Sheets</span>
+      <span class="chip">Google Forms</span>
+      <span class="chip">Budget Planning</span>
+      <span class="chip">Scheduling</span>
+    </div>
+
+    <p class="hero-note">
+      All work here is based on real task briefs — reviewed and approved by professional mentors.
+      Currently available for VA opportunities.
+    </p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <div class="section-label">About Me</div>
+      <div class="divider"></div>
+      <h2 class="about-title">Reliable, <em>thorough,</em> and ready to work.</h2>
+      <p class="about-desc">
+        I'm a VA aspirant who's been actively building my portfolio through structured challenges 
+        and real-world simulation tasks. Though I don't yet have formal employment experience as a VA, 
+        every task in this portfolio was completed under real briefs, evaluated by industry mentors, 
+        and approved for portfolio use.<br><br>
+        I care deeply about getting things right — whether that's researching the best halal restaurant 
+        for a client traveling abroad, cleaning a messy spreadsheet, or drafting a professional vendor email.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="skills-section-label">Core Competencies</div>
+      <ul class="skills-list">
+        <li>Internet & Product Research</li>
+        <li>Budget Management</li>
+        <li>Data Entry & Cleaning</li>
+        <li>Database Management</li>
+        <li>Calendar & Schedule Management</li>
+        <li>Data Visualization</li>
+        <li>Professional Email Writing</li>
+        <li>Google Sheets / Forms</li>
+        <li>Client Clarification & Communication</li>
+        <li>Problem Solving & Adaptability</li>
+        <li>Accommodation & Travel Research</li>
+        <li>Dietary-Aware Restaurant Research</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="padding: 6rem 5%;">
+  <div class="projects-section">
+    <div class="projects-header">
+      <div>
+        <div class="section-label">Portfolio</div>
+        <h2 class="section-title">Real Tasks.<br>Real Feedback.</h2>
+      </div>
+      <p class="section-sub" style="text-align:right; font-size:0.85rem;">
+        All projects below were completed under actual task briefs and reviewed by mentors.<br>
+        Click each project to see details.
+      </p>
+    </div>
+
+    <!-- PROJECT 1: THE MILK & HONEY VA -->
+    <div class="project-section" id="proj1">
+      <div class="project-header" onclick="toggleProject('proj1')">
+        <div class="project-header-left">
+          <div class="project-badge badge-orange">🍯 The Milk & Honey VA</div>
+          <div class="project-title">VA Recruitment Test — Admin & Research Skills</div>
+          <div class="project-meta">
+            <span>📅 2025</span>
+            <span>🛠 Research · Scheduling · Communication · Problem Solving</span>
+            <span>✅ Approved & Recommended</span>
+          </div>
+        </div>
+        <div class="project-header-right">
+          <div style="text-align:right; font-size:0.78rem; color:var(--text-muted); font-weight:600;">FEEDBACK</div>
+          <div style="background:#E8F0E3; color:var(--sage); padding:6px 14px; border-radius:100px; font-size:0.78rem; font-weight:700;">Recommended ✓</div>
+          <div class="toggle-icon">▼</div>
+        </div>
+      </div>
+
+      <div class="project-body">
+        <div class="callout">
+          <span class="callout-icon">💬</span>
+          <span>
+            Reviewer feedback: <strong>"Hasil jawaban sudah bagus dan rapi untuk pemula."</strong>
+            I was recommended to join as an intern — but the community is exclusively for homemakers (ibu rumah tangga), 
+            so the process didn't continue. This test proves my baseline VA readiness was already there.
+          </span>
+        </div>
+
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:2rem; line-height:1.8;">
+          This was a 7-question recruitment test covering the core skills required for an Admin & Research VA role.
+          The test was completed, submitted, and received positive written feedback from the reviewer.
+          All answers below represent my final, polished version (post-feedback revisions applied).
+        </p>
+
+        <div class="qa-grid">
+
+          <div class="qa-card">
+            <div class="qa-number">1</div>
+            <div class="qa-q">Research & Budget Management — Eid Hamper Recommendations</div>
+            <div class="qa-desc">
+              Curated 5 personal hampers (≤Rp100K) and 5 family hampers (≤Rp500K) for Eid al-Fitr. 
+              Each recommendation includes brand, product details, pricing comparison across platforms, 
+              link, and shipping info. Sourced from local Indonesian brands including Savis Tea, Botanina, 
+              Herborist, Al Jeddah, Naturlife, Tazbiya, Fukumi, and more.
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Product Research</span>
+              <span class="qa-skill">Budget Management</span>
+              <span class="qa-skill">Price Comparison</span>
+            </div>
+          </div>
+
+          <div class="qa-card">
+            <div class="qa-number">2</div>
+            <div class="qa-q">Accommodation Research — London (Near Perio School)</div>
+            <div class="qa-desc">
+              Found 5 hotel options near Perio School, London, all within £300/night budget with 
+              twin beds + private bathroom. Included room details, amenities, cancellation policy, 
+              distance, and booking platform (Agoda). Options: Holiday Inn Regent's Park, Meliá White House, 
+              Gem Langham Court, Gem Fitzrovia, The Mandeville Hotel.
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Accommodation Research</span>
+              <span class="qa-skill">Travel Planning</span>
+            </div>
+          </div>
+
+          <div class="qa-card">
+            <div class="qa-number">3</div>
+            <div class="qa-q">Restaurant Research (Dietary Considerations) — London</div>
+            <div class="qa-desc">
+              Found 3 Muslim-friendly restaurants near Perio School. Included halal certification status, 
+              distance, price range, menu highlights, service charges, and hours. Added honest notes 
+              about alcohol risk and limitations (e.g., shared bar area at Gopal's Corner).
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Dietary Research</span>
+              <span class="qa-skill">Critical Evaluation</span>
+            </div>
+          </div>
+
+          <div class="qa-card">
+            <div class="qa-number">4</div>
+            <div class="qa-q">Client Clarification — Restaurant Booking</div>
+            <div class="qa-desc">
+              Listed 13 clarifying questions to ask a client before making a restaurant reservation — 
+              covering time, headcount, backup preferences, special occasions, seating needs, 
+              payment, and reconfirmation protocol.
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Client Communication</span>
+              <span class="qa-skill">Proactive Planning</span>
+            </div>
+          </div>
+
+          <div class="qa-card">
+            <div class="qa-number">5</div>
+            <div class="qa-q">Client Clarification — Flight Booking (CGK → DPS)</div>
+            <div class="qa-desc">
+              Listed 19 clarifying questions before booking a flight — covering trip purpose, 
+              passenger details, airline preference, baggage, special needs, budget, payment method, 
+              travel insurance, alternative options, and airport transport both ways.
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Client Clarification</span>
+              <span class="qa-skill">Travel Coordination</span>
+            </div>
+          </div>
+
+          <div class="qa-card">
+            <div class="qa-number">6</div>
+            <div class="qa-q">Scheduling & Professional Communication</div>
+            <div class="qa-desc">
+              Identified Wednesday 16:00–17:00 as the only overlapping slot between Vendor 1 
+              (Mon/Wed/Fri 11–17) and Vendor 2 (Wed/Thu after 16:00). Drafted a professional email 
+              in English proposing the meeting, including platform details and flexibility for rescheduling.
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Scheduling</span>
+              <span class="qa-skill">Professional Email</span>
+            </div>
+          </div>
+
+          <div class="qa-card">
+            <div class="qa-number">7</div>
+            <div class="qa-q">Problem Solving & Adaptability</div>
+            <div class="qa-desc">
+              Chose both scenarios (accommodation unavailable + restaurant fully booked). 
+              Drafted two WhatsApp-style client messages — concise, professional, and action-oriented. 
+              Each message included 3 alternative suggestions and a clear next step for the client to confirm.
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Crisis Handling</span>
+              <span class="qa-skill">Client Communication</span>
+            </div>
+          </div>
+
+          <div class="qa-card" style="border: 1.5px dashed var(--sand);">
+            <div class="qa-number" style="background:var(--terracotta);">★</div>
+            <div class="qa-q">Optional — Risk Awareness</div>
+            <div class="qa-desc">
+              Identified 2 key risks: (1) Miscommunication — prevented by confirming & documenting 
+              all client instructions in writing. (2) Scheduling & time management errors — prevented 
+              by double-checking availability, time zones, and building in contingency questions in advance.
+            </div>
+            <div class="qa-skills">
+              <span class="qa-skill">Risk Management</span>
+              <span class="qa-skill">Self-Awareness</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: 30 DPC -->
+    <div class="project-section" id="proj2">
+      <div class="project-header" onclick="toggleProject('proj2')">
+        <div class="project-header-left">
+          <div class="project-badge badge-green">📊 30 Day Portfolio Challenge — Batch 2</div>
+          <div class="project-title">Data Entry & Admin VA Tasks — Seruni Studio (Brand Simulation)</div>
+          <div class="project-meta">
+            <span>📅 April 2026</span>
+            <span>🛠 Data Entry · Google Sheets · Calendar Mgmt · Admin</span>
+            <span>🏢 Client: Seruni Studio (Fashion & Lifestyle brand dummy)</span>
+          </div>
+        </div>
+        <div class="project-header-right">
+          <div class="grade-badge grade-a">A</div>
+          <div style="font-size:0.72rem; color:var(--text-muted); font-weight:600;">AVG GRADE</div>
+          <div class="toggle-icon">▼</div>
+        </div>
+      </div>
+
+      <div class="project-body">
+        <div class="callout">
+          <span class="callout-icon">🏪</span>
+          <span>
+            <strong>About the brand:</strong> Seruni Studio is a dummy brand for this challenge — 
+            a local Indonesian fashion brand (ready-to-wear, inspired by Nusantara culture), 
+            targeting women 22–35 years old. Tone: elegant, warm, visual-first, proud of local.
+            All tasks simulate real VA work for an actual e-commerce fashion client.
+          </span>
+        </div>
+
+        <div class="feedback-box">
+          <p>
+            "Hurun'in, 5 task di dua kategori role berbeda — itu komitmen yang luar biasa untuk seorang pemula. 
+            Kalender manajemen 34 halaman yang kamu buat menunjukkan keseriusan dan ketelitian yang jarang terlihat. 
+            Jadwal 4 minggu Seruni Studio yang kamu susun terasa realistis dan operasional... 
+            Ini menunjukkan kamu sudah berpikir seperti seorang admin VA yang memahami bisnis, bukan hanya mengisi template kosong."
+          </p>
+          <div class="feedback-source">— Mentor feedback, 30 Day Portfolio Challenge Batch 2 · indriariadna.com</div>
+        </div>
+
+        <!-- Overall Scores -->
+        <div class="score-summary">
+          <div class="score-box">
+            <div class="score-big">36.7<span class="score-of">/40</span></div>
+            <div class="score-cat">Data Entry Avg</div>
+          </div>
+          <div class="score-box">
+            <div class="score-big">30<span class="score-of">/40</span></div>
+            <div class="score-cat">Calendar Mgmt</div>
+          </div>
+          <div class="score-box">
+            <div class="score-big">34<span class="score-of">/40</span></div>
+            <div class="score-cat">Overall (5 tasks)</div>
+          </div>
+          <div class="score-box">
+            <div class="score-big">100<span class="score-of">%</span></div>
+            <div class="score-cat">Tasks Approved</div>
+          </div>
+        </div>
+
+        <div class="tasks-grid">
+
+          <!-- Task 1 -->
+          <div class="task-card grade-a-card">
+            <div class="task-number">Task 01 · Data Entry</div>
+            <div class="task-name">Input & Clean Product Data — Google Sheets</div>
+            <div class="task-score-row">
+              <div class="score-bar-wrap"><div class="score-bar" style="width:95%"></div></div>
+              <div class="score-text">38/40</div>
+            </div>
+            <div class="task-criteria">
+              <div class="criteria-item">
+                <div class="criteria-label">Completeness</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Quality</div>
+                <div class="criteria-value">10/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">On Time</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Relevance</div>
+                <div class="criteria-value">10/10</div>
+              </div>
+            </div>
+            <div style="margin-top:1rem; font-size:0.78rem; color:var(--text-muted); line-height:1.6;">
+              Identified 10 types of data errors (duplicates, inconsistent format, empty SKU, wrong status logic). 
+              Cleaned raw dataset into a polished Data Bersih sheet. Reviewer note: "Shows business logic understanding, not just formatting."
+            </div>
+          </div>
+
+          <!-- Task 2 -->
+          <div class="task-card grade-a-card">
+            <div class="task-number">Task 02 · Data Entry</div>
+            <div class="task-name">E-commerce Product Database — 45 Products</div>
+            <div class="task-score-row">
+              <div class="score-bar-wrap"><div class="score-bar" style="width:87.5%"></div></div>
+              <div class="score-text">35/40</div>
+            </div>
+            <div class="task-criteria">
+              <div class="criteria-item">
+                <div class="criteria-label">Completeness</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Quality</div>
+                <div class="criteria-value">8/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">On Time</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Relevance</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+            </div>
+            <div style="margin-top:1rem; font-size:0.78rem; color:var(--text-muted); line-height:1.6;">
+              Built 45-product database (exceeding 30 minimum) with SKU, category, color, sizes, 
+              normal & 20%-discount pricing, stock, status, and product descriptions. All consistent across rows.
+            </div>
+          </div>
+
+          <!-- Task 3 -->
+          <div class="task-card grade-a-card">
+            <div class="task-number">Task 03 · Data Visualization</div>
+            <div class="task-name">Sales Recap & Visualization — 3 Charts</div>
+            <div class="task-score-row">
+              <div class="score-bar-wrap"><div class="score-bar" style="width:92.5%"></div></div>
+              <div class="score-text">37/40</div>
+            </div>
+            <div class="task-criteria">
+              <div class="criteria-item">
+                <div class="criteria-label">Completeness</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Quality</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">On Time</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Relevance</div>
+                <div class="criteria-value">10/10</div>
+              </div>
+            </div>
+            <div style="margin-top:1rem; font-size:0.78rem; color:var(--text-muted); line-height:1.6;">
+              Created 50-row transaction dataset + monthly sales recap (Jan–Mar) + 3 charts: 
+              total monthly sales, best-selling category, top platform. All calculations accurate throughout.
+            </div>
+          </div>
+
+          <!-- Task 5 (Calendar) -->
+          <div class="task-card grade-b-card">
+            <div class="task-number">Task 05 · Admin VA</div>
+            <div class="task-name">2-Week Calendar Management — Seruni Studio</div>
+            <div class="task-score-row">
+              <div class="score-bar-wrap"><div class="score-bar orange" style="width:75%"></div></div>
+              <div class="score-text">30/40</div>
+            </div>
+            <div class="task-criteria">
+              <div class="criteria-item">
+                <div class="criteria-label">Completeness</div>
+                <div class="criteria-value">7/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Quality</div>
+                <div class="criteria-value">7/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">On Time</div>
+                <div class="criteria-value">9/10</div>
+              </div>
+              <div class="criteria-item">
+                <div class="criteria-label">Relevance</div>
+                <div class="criteria-value">7/10</div>
+              </div>
+            </div>
+            <div style="margin-top:1rem; font-size:0.78rem; color:var(--text-muted); line-height:1.6;">
+              Built a 2-week calendar simulation using Google Calendar, covering photoshoots, 
+              content upload deadlines, Instagram live, and vendor follow-ups. 
+              Reviewers noted solid foundation; suggested adding color-coding and PIC details for clarity.
+            </div>
+          </div>
+
+        </div>
+
+        <div style="background: var(--cream-dark); border-radius:12px; padding:1.5rem 2rem; font-size:0.82rem; color:var(--text-muted); line-height:1.8;">
+          <strong style="color:var(--brown);">Note on Task 4 (Google Form Onboarding):</strong>
+          This task was also completed and received Grade A (36/40) — but the output was a live Google Form link 
+          which can't be embedded here. Reviewer highlights: on-brand copywriting, conditional skip logic, 
+          digital signature closing, and professional section flow.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="color:var(--terracotta);">Let's Connect</div>
+    <h2 class="section-title" style="color:var(--brown);">Open to VA Opportunities</h2>
+    <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.8; margin-top:1rem;">
+      I'm actively looking for VA roles — admin, research, data entry, or assistant work.
+      If you're a client or know someone looking, I'd love to connect!
+    </p>
+    <div class="contact-links">
+      <a href="https://wa.me/6287760722836" class="contact-btn btn-dark" target="_blank">
+        💬 WhatsApp Me
+      </a>
+      <a href="mailto:uhurunin@yahoo.com" class="contact-btn btn-outline">
+        ✉ Email Me
+      </a>
+    </div>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-top:1.5rem;">
+      uhurunin@yahoo.com · +62 877 6072 2836
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>Portfolio by Hurun'in Zakkiyah · Virtual Assistant · Built 2026</p>
+</footer>
+
+<script>
+  function toggleProject(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  // Auto-open both on load after small delay for smooth render
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('proj1').classList.add('open');
+      document.getElementById('proj2').classList.add('open');
+    }, 300);
+  });
+
+  // Animate score bars on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.dataset.width;
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.score-bar').forEach(bar => {
+    const w = bar.style.width;
+    bar.dataset.width = w;
+    bar.style.width = '0';
+    observer.observe(bar);
+  });
+</script>
+</body>
+</html>
